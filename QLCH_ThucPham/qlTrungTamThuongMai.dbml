@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QuanLyBanHang" Class="qlTrungTamThuongMaiDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\QuanLyBanHang.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="QLCH_ThucPham.Properties.Settings" SettingsPropertyName="QLBanHangConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tblChiTietHDBan" Member="tblChiTietHDBans">
+    <Type Name="tblChiTietHDBan">
+      <Column Name="MaHDBan" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaHang" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SoLuong" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="DonGia" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="GiamGia" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="ThanhTien" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="tblChiTietHDBan_tblHang" Member="tblHangs" ThisKey="MaHang" OtherKey="MaHang" Type="tblHang" Cardinality="One" />
+      <Association Name="tblChiTietHDBan_tblHDBan" Member="tblHDBans" ThisKey="MaHDBan" OtherKey="MaHDBan" Type="tblHDBan" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblPhanLoai" Member="tblPhanLoais">
+    <Type Name="tblPhanLoai">
+      <Column Name="MaPhanLoai" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenPhanLoai" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="tblPhanLoai_tblHang" Member="tblHangs" ThisKey="MaPhanLoai" OtherKey="MaPhanLoai" Type="tblHang" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblHang" Member="tblHangs">
+    <Type Name="tblHang">
+      <Column Name="MaHang" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenHang" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MaPhanLoai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SoLuong" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="DonGiaNhap" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="DonGiaBan" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Anh" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="GhiChu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="tblChiTietHDBan_tblHang" Member="tblChiTietHDBan" ThisKey="MaHang" OtherKey="MaHang" Type="tblChiTietHDBan" IsForeignKey="true" />
+      <Association Name="tblPhanLoai_tblHang" Member="tblPhanLoai" ThisKey="MaPhanLoai" OtherKey="MaPhanLoai" Type="tblPhanLoai" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblHDBan" Member="tblHDBans">
+    <Type Name="tblHDBan">
+      <Column Name="MaHDBan" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaNhanVien" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="NgayBan" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="MaKhach" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="TongTien" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="tblChiTietHDBan_tblHDBan" Member="tblChiTietHDBan" ThisKey="MaHDBan" OtherKey="MaHDBan" Type="tblChiTietHDBan" IsForeignKey="true" />
+      <Association Name="tblNhanVien_tblHDBan" Member="tblNhanVien" ThisKey="MaNhanVien" OtherKey="MaNhanVien" Type="tblNhanVien" IsForeignKey="true" />
+      <Association Name="tblKhach_tblHDBan" Member="tblKhach" ThisKey="MaKhach" OtherKey="MaKhach" Type="tblKhach" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblKhach" Member="tblKhaches">
+    <Type Name="tblKhach">
+      <Column Name="MaKhach" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenKhach" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DienThoai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="tblKhach_tblHDBan" Member="tblHDBans" ThisKey="MaKhach" OtherKey="MaKhach" Type="tblHDBan" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblNhanVien" Member="tblNhanViens">
+    <Type Name="tblNhanVien">
+      <Column Name="MaNhanVien" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenNhanVien" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="GioiTinh" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DienThoai" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="NgaySinh" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="tblNhanVien_tblHDBan" Member="tblHDBans" ThisKey="MaNhanVien" OtherKey="MaNhanVien" Type="tblHDBan" />
+    </Type>
+  </Table>
+</Database>
